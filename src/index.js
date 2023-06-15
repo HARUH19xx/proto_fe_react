@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client'; // Changed import
+import { createRoot } from 'react-dom/client'; 
 import ReactDOM from 'react-dom';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error:', error));
-  }, []); // Empty array means this effect runs once on component mount
+  }, []);
 
   return (
     <div>
