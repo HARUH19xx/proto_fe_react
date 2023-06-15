@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-// import ReactDOM from 'react-dom';
+import { useRecoilState, RecoilRoot } from 'recoil';
+import { signedInState, pageState } from './components/state.js';
 import SignIn from './components/SignIn.jsx';
+import SignUp from './components/SignUp.jsx';
 
 const App = () => {
-  // const [data, setData] = useState(null);
+  const [signedIn] = useRecoilState(signedInState);
+  const [page] = useRecoilState(pageState);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:8080/')
-  //     .then(response => response.json())
-  //     .then(data => setData(data))
-  //     .catch(error => console.error('Error:', error));
-  // }, []);
-
-  return (
-    <div>
-      <h1>Received data:</h1>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-      <SignIn hello="私" />
-    </div>
-  );
+  if (!signedIn) {
+    return page === 'signin' ? <SignIn /> : <SignUp />;
+  } else {
+    return (
+      <div>
+        <h1>ようこそ！</h1>
+      </div>
+    );
+  }
 }
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  createRoot(rootElement).render(<App />);
+  createRoot(rootElement).render(
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
+  );
 } else {
   console.error("No root element found");
 }
